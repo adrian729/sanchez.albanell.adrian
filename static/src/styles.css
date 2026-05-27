@@ -34,8 +34,8 @@
   --color-cv-accent: #18181b;      /* zinc-900 — currently applied to section title / tech tag / CTA */
   --color-cv-accent-soft: #a1a1aa; /* zinc-400 — currently applied to bullet markers */
 
-  /* PRIMARY (cyan) — defined, not yet applied to any rule */
-  --color-cv-primary: #164e63;     /* cyan-900 */
+  /* PRIMARY (teal) — defined, not yet applied to any rule */
+  --color-cv-primary: #134e4a;     /* teal-900 */
 
   /* SECONDARY (sky) — defined, not yet applied to any rule */
   --color-cv-secondary: #0c4a6e;       /* sky-900 */
@@ -65,7 +65,7 @@
   }
 
   .cv-title {
-    @apply text-zinc-300 font-medium uppercase tracking-[0.18em] text-lg mt-1;
+    @apply text-teal-200/70 font-medium uppercase tracking-[0.18em] text-lg mt-1;
   }
 
   .cv-profile {
@@ -113,7 +113,7 @@
   }
 
   .cv-skill-label {
-    @apply text-cv-muted font-medium;
+    @apply text-teal-600 font-medium;
   }
 
   .cv-card {
@@ -141,27 +141,19 @@
   }
 
   .cv-meta-tag {
-    @apply italic text-cv-accent font-cv-mono;
+    @apply italic text-teal-800 font-cv-mono bg-teal-100/50 px-1.25 py-0.25;
   }
 
   .cv-bullets {
-    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-cv-accent-soft;
+    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-teal-500;
   }
 
   .cv-tech {
-    @apply mt-2 text-[9.5pt] text-cv-muted font-cv-mono;
+    @apply mt-2 text-[9.5pt] text-teal-600 font-cv-mono;
   }
 
   .cv-tech-label {
     @apply font-semibold text-cv-ink-soft mr-1;
-  }
-
-  .cv-chip-list {
-    @apply flex flex-wrap gap-1.5 mt-1;
-  }
-
-  .cv-chip {
-    @apply inline-block px-2 py-0.5 rounded-full bg-cv-sidebar text-[8.5pt] text-cv-ink-soft;
   }
 
   .cv-download-btn {
