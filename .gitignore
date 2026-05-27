@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Tailwind standalone binary (downloaded by scripts/install-tailwind.sh)
+bin/tailwindcss
+
+# Static bundle produced by scripts/build-static.py (built fresh in CI for Pages)
+dist/

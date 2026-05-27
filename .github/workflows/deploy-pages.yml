@@ -1,0 +1,56 @@
+name: Deploy CV to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false   # never cut off an in-flight Pages publish
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # WeasyPrint native dependencies — same set the Dockerfile installs.
+      - name: Install WeasyPrint system libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libpango-1.0-0 \
+            libpangoft2-1.0-0 \
+            libharfbuzz-subset0 \
+            libgdk-pixbuf2.0-0 \
+            shared-mime-info \
+            libcairo2
+
+      - uses: astral-sh/setup-uv@v4
+      - run: uv sync --frozen
+
+      - name: Install Tailwind CLI
+        run: ./scripts/install-tailwind.sh
+
+      - name: Build static bundle
+        run: ./scripts/build-static.py   # internally invokes build-css.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

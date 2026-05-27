@@ -1,0 +1,19 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.git/
+.gitignore
+.claude/
+.dockerignore
+Dockerfile
+README.md
+
+# Tailwind binary is downloaded inside the builder stage
+bin/
+
+# Workspace / reference material not needed at runtime
+future/
+
+# CSS is rebuilt inside the builder; don't ship whatever the host has
+static/cv.css

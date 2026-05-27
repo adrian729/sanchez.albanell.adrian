@@ -1,0 +1,150 @@
+# CV — FastAPI + WeasyPrint
+
+A FastAPI app that renders a CV as both an HTML page and a print-ready PDF from a single Jinja template, styled with Tailwind CSS v4 and generated via WeasyPrint v67.
+
+---
+
+## Routes
+
+* `GET /` — HTML view of the CV
+* `GET /cv.pdf` — same template rendered to PDF (returned inline)
+* `GET /health` — health check
+
+---
+
+## Stack
+
+* **FastAPI[standard] ≥ 0.124.4** + **Jinja2** templates
+* **WeasyPrint ≥ 67.0** for PDF generation
+* **Tailwind CSS v4** via the standalone CLI binary (no Node required)
+* **tinycss2** — used by the build script to post-process Tailwind's output for WeasyPrint compatibility (see *How the CSS pipeline works* below)
+* **uv** for Python dependency management
+
+---
+
+## Local development
+
+### 1. Prerequisites
+
+[uv](https://docs.astral.sh/uv/):
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### 2. Install
+
+```
+uv sync                            # Python deps
+./scripts/install-tailwind.sh      # downloads Tailwind v4 binary into bin/tailwindcss
+```
+
+### 3. Run (two terminals)
+
+```
+# terminal 1 — build CSS on every template / source CSS change
+./scripts/build-css.py --watch
+
+# terminal 2 — FastAPI dev server
+uv run fastapi dev app/main.py
+```
+
+* Web view: http://localhost:8000/
+* PDF: http://localhost:8000/cv.pdf
+
+---
+
+## Project structure
+
+```
+app/main.py                  FastAPI app: GET / (HTML), GET /cv.pdf (WeasyPrint), GET /health
+templates/
+  base.html                  HTML scaffolding, loads /static/cv.css
+  cv.html                    CV markup (hardcoded content, two-column layout)
+static/
+  src/cv.css                 Tailwind source (@import "tailwindcss" + @theme tokens + @page / @media print)
+  cv.css                     built output (loaded by the browser AND WeasyPrint)
+scripts/
+  install-tailwind.sh        downloads the platform's Tailwind v4 standalone binary
+  build-css.py               runs Tailwind, then transforms output for WeasyPrint
+bin/tailwindcss              standalone Tailwind binary (gitignored)
+```
+
+To change the CV: edit `templates/cv.html` (content) and `static/src/cv.css` (custom theme tokens + components). The watcher rebuilds `static/cv.css` automatically.
+
+---
+
+## How the CSS pipeline works
+
+Tailwind v4 uses several modern CSS features WeasyPrint 67 doesn't read (cascade layers, CSS nesting, `:root, :host` selector lists, `@property` initial values, `oklch()` colours). `scripts/build-css.py` runs the Tailwind CLI and then post-processes the output using tinycss2 to:
+
+1. Unwrap every `@layer NAME { … }` block (so design tokens at `:root` are visible)
+2. Hoist nested rules to top level, combining selectors and wrapping in their enclosing `@media` / `@supports`
+3. Strip `:host` / `::file-selector-button` / `::backdrop` from selector lists (WeasyPrint drops the whole rule if any one is unparseable — that silently kills both Tailwind's `:root, :host` token block and the universal `*, ::after, ::before, ::backdrop` reset)
+4. Convert each `@property` into a plain `:root { --name: <initial-value>; }`
+5. Resolve every `oklch(L C H [/A])` literal to sRGB hex / `rgba()`
+6. Replace `calc(infinity * 1px)` (what Tailwind emits for `rounded-full`) with `9999px` — WeasyPrint can't evaluate `infinity` and otherwise serializes the result as the literal text `nan` into the PDF content stream
+
+Browsers see the same effective styles — they just don't need the transform. WeasyPrint reads the post-processed file directly.
+
+---
+
+## Production
+
+### Docker
+
+The `Dockerfile` is multi-stage:
+
+* **builder** — installs Python deps via `uv`, downloads the Tailwind v4 standalone binary via `scripts/install-tailwind.sh`, and runs `scripts/build-css.py` to produce `static/cv.css`.
+* **runtime** — `python:3.13-slim-bookworm` with WeasyPrint's native libs (Pango, Cairo, HarfBuzz, etc.), the venv, `app/`, `templates/`, and the built `static/cv.css`. Runs as a non-root `appuser` on port `8000`.
+
+Build and run locally:
+```
+docker build -t cv-fastapi .
+docker run --rm -p 8000:8000 cv-fastapi
+```
+
+Hit `http://localhost:8000/`, `/cv.pdf`, and `/health`.
+
+`.dockerignore` excludes `.venv/`, `bin/`, `future/`, the prebuilt `static/cv.css`, etc., so the CSS is always built fresh inside the image.
+
+### Coolify
+
+Coolify deploys this repo from the `Dockerfile` directly — no compose file, no extra config:
+
+1. Create a new resource → **Application**, point it at this Git repo.
+2. **Build pack**: Dockerfile (auto-detected).
+3. **Exposed port**: `8000`.
+4. **Healthcheck**: picked up automatically from the `HEALTHCHECK` directive in the Dockerfile (`curl /health`).
+5. Set a domain / Cloudflare proxy as you would for any Coolify app.
+
+On every push, Coolify runs the same build that completes locally (`docker build .`), so the Tailwind binary download + CSS pipeline happens server-side. Nothing needs to be committed to ship — the only build artefact is `static/cv.css`, which is regenerated by the builder stage.
+
+### GitHub Pages
+
+The same CV is also published as a fully static bundle to GitHub Pages via the `.github/workflows/deploy-pages.yml` Actions workflow. On every push to `main` it runs the same Tailwind + WeasyPrint pipeline used locally and Coolify, then publishes `dist/` via `actions/deploy-pages`.
+
+**One-time setup**: repo → Settings → Pages → Source = **GitHub Actions**.
+
+After that, `git push origin main` does everything — the workflow builds (~1–2 min) and the site goes live at `https://<your-username>.github.io/<repo-name>/`.
+
+Local preview of exactly what Pages will serve:
+
+```
+./scripts/build-static.py
+python -m http.server -d dist 8765
+```
+
+The Coolify deploy and the Pages deploy are independent — pushing to `main` triggers both if both are configured; either can be disabled without affecting the other.
+
+---
+
+## Typography
+
+The CV uses [**Inter**](https://rsms.me/inter/), self-hosted from `static/fonts/`. Two variable `.woff2` files (one normal, one italic — Latin subset, ~73 KB total) cover every weight the template uses. Because the font ships with the app, PDFs are typographically identical whether they come out of `uv run fastapi dev` on macOS, the Coolify container, or the GitHub Pages CI build.
+
+To swap or update Inter, replace the two files in `static/fonts/`. The current files came from Google Fonts v20 — to refresh, fetch the CSS at `https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap` with a recent Chrome User-Agent and grab the latin-subset `.woff2` URLs from the response. Inter is licensed under the [SIL Open Font License](https://github.com/rsms/inter/blob/master/LICENSE.txt).
+
+---
+
+## License
+MIT

@@ -1,0 +1,13 @@
+[project]
+authors = [{ name = "Adrian Sanchez Albanell", email = "sanchez.albanell.adrian@gmail.com" }]
+name = "cv-fastapi"
+version = "0.1.0"
+description = "Personal CV — HTML view + PDF generator (FastAPI + WeasyPrint + Tailwind v4)"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.124.4",
+    "jinja2>=3.1.6",
+    "tinycss2>=1.5.0",
+    "weasyprint>=67.0",
+]
