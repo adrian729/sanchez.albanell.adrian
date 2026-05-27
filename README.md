@@ -121,11 +121,11 @@ On every push, Coolify runs the same build that completes locally (`docker build
 
 ### GitHub Pages
 
-The same CV is also published as a fully static bundle to GitHub Pages via the `.github/workflows/deploy-pages.yml` Actions workflow. On every push to `main` it runs the same Tailwind + WeasyPrint pipeline used locally and Coolify, then publishes `dist/` via `actions/deploy-pages`.
+The same CV is also published as a fully static bundle to GitHub Pages via the `.github/workflows/deploy-pages.yml` Actions workflow. On every push to `master` it runs the same Tailwind + WeasyPrint pipeline used locally and Coolify, then publishes `dist/` via `actions/deploy-pages`.
 
 **One-time setup**: repo → Settings → Pages → Source = **GitHub Actions**.
 
-After that, `git push origin main` does everything — the workflow builds (~1–2 min) and the site goes live at `https://<your-username>.github.io/<repo-name>/`.
+After that, `git push origin master` does everything — the workflow builds (~1–2 min) and the site goes live at `https://<your-username>.github.io/<repo-name>/`.
 
 Local preview of exactly what Pages will serve:
 
@@ -134,7 +134,7 @@ Local preview of exactly what Pages will serve:
 python -m http.server -d dist 8765
 ```
 
-The Coolify deploy and the Pages deploy are independent — pushing to `main` triggers both if both are configured; either can be disabled without affecting the other.
+The Coolify deploy and the Pages deploy are independent — pushing to `master` triggers both if both are configured; either can be disabled without affecting the other.
 
 ---
 
