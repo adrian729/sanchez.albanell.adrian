@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # WeasyPrint native dependencies — same set the Dockerfile installs.
       - name: Install WeasyPrint system libs
@@ -32,7 +32,7 @@ jobs:
             shared-mime-info \
             libcairo2
 
-      - uses: astral-sh/setup-uv@v4
+      - uses: astral-sh/setup-uv@v7
       - run: uv sync --frozen
 
       - name: Install Tailwind CLI
@@ -41,7 +41,7 @@ jobs:
       - name: Build static bundle
         run: ./scripts/build-static.py   # internally invokes build-css.py
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -53,4 +53,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
