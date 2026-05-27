@@ -42,6 +42,14 @@ emits heavily, so each Tailwind rebuild gets run through `transform_for_weasypri
      stream, breaking downstream PDF tooling. The transform substitutes a
      finite large value (9999px) before tinycss2 sees the CSS.
 
+  7. CSS logical properties (`padding-inline`, `padding-block`, `margin-inline`,
+     `margin-block-start`, `inset-inline-start`, `border-start-end-radius`, …).
+     Tailwind v4 emits these for every `px-*`, `py-*`, `mx-*`, `my-*`,
+     `space-y-*`, `start-*`, etc. WeasyPrint 67 silently ignores them, so the
+     PDF loses most layout padding/margins. The transform expands each logical
+     property to its LTR physical equivalent at declaration-serialization time
+     (paired props split a two-value shorthand correctly).
+
 The transform uses tinycss2 (already a WeasyPrint dependency), so it's robust to
 new utility class combinations the user adds — every Tailwind v4 build goes
 through the same pipeline. Browsers are unaffected: they see the same end result.
@@ -60,7 +68,8 @@ import tinycss2
 from tinycss2 import serialize
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE = ROOT / "static" / "src" / "cv.css"
+SOURCE_DIR = ROOT / "static" / "src"
+SOURCE = SOURCE_DIR / "cv.css"
 TARGET = ROOT / "static" / "cv.css"
 TEMPLATE_DIR = ROOT / "templates"
 TAILWIND = ROOT / "bin" / "tailwindcss"
@@ -74,6 +83,34 @@ OKLCH_RE = re.compile(
 )
 
 INFINITY_CALC_RE = re.compile(r"calc\(\s*infinity\s*\*\s*1px\s*\)")
+
+# CSS logical properties → physical pair(s). WeasyPrint 67 ignores logical
+# properties entirely (silently drops them), and Tailwind v4 emits them for
+# every `px-*`, `py-*`, `mx-*`, `my-*`, `space-y-*`, etc. — so without this
+# expansion, the PDF loses huge amounts of layout. LTR mapping (this CV is
+# LTR-only; rerun the build for an RTL project).
+LOGICAL_PROPS: dict[str, tuple[str, ...]] = {
+    "padding-inline": ("padding-left", "padding-right"),
+    "padding-block": ("padding-top", "padding-bottom"),
+    "margin-inline": ("margin-left", "margin-right"),
+    "margin-block": ("margin-top", "margin-bottom"),
+    "padding-inline-start": ("padding-left",),
+    "padding-inline-end": ("padding-right",),
+    "padding-block-start": ("padding-top",),
+    "padding-block-end": ("padding-bottom",),
+    "margin-inline-start": ("margin-left",),
+    "margin-inline-end": ("margin-right",),
+    "margin-block-start": ("margin-top",),
+    "margin-block-end": ("margin-bottom",),
+    "inset-inline-start": ("left",),
+    "inset-inline-end": ("right",),
+    "inset-block-start": ("top",),
+    "inset-block-end": ("bottom",),
+    "border-start-start-radius": ("border-top-left-radius",),
+    "border-start-end-radius": ("border-top-right-radius",),
+    "border-end-start-radius": ("border-bottom-left-radius",),
+    "border-end-end-radius": ("border-bottom-right-radius",),
+}
 
 
 def transform_for_weasyprint(css: str) -> str:
@@ -218,10 +255,47 @@ def _process(
 
 
 def _serialize_declaration(decl) -> str:
-    text = f"{decl.name}: {serialize(decl.value).strip()}"
-    if decl.important:
-        text += " !important"
-    return text + ";"
+    val_text = serialize(decl.value).strip()
+    important = " !important" if decl.important else ""
+    targets = LOGICAL_PROPS.get(decl.name)
+    if targets is None:
+        return f"{decl.name}: {val_text}{important};"
+    if len(targets) == 1:
+        return f"{targets[0]}: {val_text}{important};"
+    parts = _split_top_level(val_text)
+    if len(parts) >= 2:
+        return (
+            f"{targets[0]}: {parts[0]}{important}; "
+            f"{targets[1]}: {parts[1]}{important};"
+        )
+    return (
+        f"{targets[0]}: {val_text}{important}; "
+        f"{targets[1]}: {val_text}{important};"
+    )
+
+
+def _split_top_level(s: str) -> list[str]:
+    """Split a CSS value on top-level whitespace (respecting parens, so
+    `calc(var(--spacing) * 2)` is one token)."""
+    parts: list[str] = []
+    current: list[str] = []
+    depth = 0
+    for ch in s:
+        if ch == "(":
+            depth += 1
+            current.append(ch)
+        elif ch == ")":
+            depth -= 1
+            current.append(ch)
+        elif ch.isspace() and depth == 0:
+            if current:
+                parts.append("".join(current))
+                current = []
+        else:
+            current.append(ch)
+    if current:
+        parts.append("".join(current))
+    return parts
 
 
 def _split_selectors(s: str) -> list[str]:
@@ -253,7 +327,7 @@ def build() -> None:
 
 
 def _watched_mtime() -> float:
-    paths = [SOURCE, *TEMPLATE_DIR.rglob("*.html")]
+    paths = [*SOURCE_DIR.glob("*.css"), *TEMPLATE_DIR.rglob("*.html")]
     return max(p.stat().st_mtime for p in paths if p.exists())
 
 
@@ -265,7 +339,7 @@ def watch() -> None:
         if latest > last_seen:
             try:
                 build()
-            except subprocess.CalledProcessError as e:
+            except Exception as e:
                 print(f"build failed: {e}")
             last_seen = latest
         time.sleep(0.5)

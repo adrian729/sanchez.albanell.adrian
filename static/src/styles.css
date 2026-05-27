@@ -1,0 +1,191 @@
+/* Self-hosted IBM Plex Sans (body) + Inconsolata (mono accents).
+   Variable .woff2, Latin subset. URLs are relative to this file's location so
+   they resolve under both `/static/cv.css` (browser) and the on-disk path
+   WeasyPrint sees. README documents how to refresh. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('fonts/IBMPlexSans.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('fonts/Inconsolata.woff2') format('woff2');
+}
+
+@theme {
+  /* GRAY (zinc) — body text, borders, neutrals */
+  --color-cv-ink: #27272a;         /* zinc-800 */
+  --color-cv-ink-soft: #3f3f46;    /* zinc-700 */
+  --color-cv-muted: #71717a;       /* zinc-500 */
+  --color-cv-rule: #e4e4e7;        /* zinc-200 */
+  --color-cv-sidebar: #e4e4e7;     /* zinc-200 */
+  --color-cv-accent: #18181b;      /* zinc-900 — currently applied to section title / tech tag / CTA */
+  --color-cv-accent-soft: #a1a1aa; /* zinc-400 — currently applied to bullet markers */
+
+  /* PRIMARY (cyan) — defined, not yet applied to any rule */
+  --color-cv-primary: #164e63;     /* cyan-900 */
+
+  /* SECONDARY (sky) — defined, not yet applied to any rule */
+  --color-cv-secondary: #0c4a6e;       /* sky-900 */
+  --color-cv-secondary-mid: #0ea5e9;   /* sky-500 */
+  --color-cv-secondary-soft: #38bdf8;  /* sky-400 */
+
+  --font-cv-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-cv-mono: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+@layer components {
+  .cv-page {
+    @apply mx-auto max-w-[840px] my-6 text-cv-ink font-cv-sans text-[10.5pt] leading-relaxed shadow-sm min-h-[29.7cm] print:my-0 print:shadow-none print:max-w-none;
+    background: linear-gradient(to right, var(--color-cv-sidebar) 260px, var(--color-zinc-50) 260px);
+  }
+
+  .cv-page + .cv-page {
+    break-before: page;
+  }
+
+  .cv-header {
+    @apply px-[1cm] pt-8 pb-6 bg-zinc-800;
+  }
+
+  .cv-name {
+    @apply text-2xl font-semibold tracking-tight text-zinc-50;
+  }
+
+  .cv-title {
+    @apply text-zinc-300 font-medium uppercase tracking-[0.18em] text-lg mt-1;
+  }
+
+  .cv-profile {
+    @apply mt-4 text-[10.5pt] leading-[1.55] text-zinc-300;
+  }
+
+  .cv-body {
+    @apply table w-full;
+    table-layout: fixed;
+  }
+
+  .cv-sidebar {
+    @apply table-cell w-[260px] align-top space-y-6 p-6 pr-4;
+  }
+
+  .cv-main {
+    @apply table-cell align-top space-y-6 px-[1cm] py-6;
+  }
+
+  .cv-section-title {
+    @apply text-[9pt] font-semibold uppercase tracking-[0.18em] text-cv-accent border-b border-cv-rule mb-3;
+  }
+
+  .cv-contact-list {
+    @apply space-y-1 text-[9pt] text-cv-ink-soft;
+  }
+
+  .cv-contact-list a {
+    @apply text-cv-ink underline-offset-2;
+    overflow-wrap: anywhere;
+  }
+
+  .cv-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    margin-right: 0.4em;
+    flex-shrink: 0;
+    fill: var(--color-cv-muted);
+  }
+
+  .cv-skill-row {
+    @apply flex flex-col text-[9pt] py-1;
+  }
+
+  .cv-skill-label {
+    @apply text-cv-muted font-medium;
+  }
+
+  .cv-card {
+    @apply break-inside-avoid;
+  }
+
+  .cv-card + .cv-card {
+    @apply mt-4 pt-4 border-t border-cv-rule;
+  }
+
+  .cv-card-head {
+    @apply mb-3;
+  }
+
+  .cv-role {
+    @apply font-semibold text-[10.5pt] text-cv-ink;
+  }
+
+  .cv-role-location {
+    @apply ml-3 text-[9pt] text-cv-muted font-normal;
+  }
+
+  .cv-meta {
+    @apply mt-0.5 text-[9.5pt] text-cv-muted flex flex-wrap gap-x-2;
+  }
+
+  .cv-meta-tag {
+    @apply italic text-cv-accent font-cv-mono;
+  }
+
+  .cv-bullets {
+    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-cv-accent-soft;
+  }
+
+  .cv-tech {
+    @apply mt-2 text-[9.5pt] text-cv-muted font-cv-mono;
+  }
+
+  .cv-tech-label {
+    @apply font-semibold text-cv-ink-soft mr-1;
+  }
+
+  .cv-chip-list {
+    @apply flex flex-wrap gap-1.5 mt-1;
+  }
+
+  .cv-chip {
+    @apply inline-block px-2 py-0.5 rounded-full bg-cv-sidebar text-[8.5pt] text-cv-ink-soft;
+  }
+
+  .cv-download-btn {
+    @apply fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-md bg-cv-accent px-4 py-2 text-zinc-50 text-[10pt] font-medium shadow-lg hover:shadow-xl transition-shadow print:hidden;
+  }
+
+  .cv-photo {
+    @apply w-[110px] h-[110px] rounded-full object-cover border-2 border-cv-rule shadow-sm shrink-0;
+  }
+}
+
+@page {
+  size: A4;
+  margin: 0;
+  background: #fafafa;
+}
+
+@media print {
+  html, body {
+    background: #fafafa;
+  }
+
+  .cv-page {
+    box-shadow: none;
+    max-width: none;
+  }
+}

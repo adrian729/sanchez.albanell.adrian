@@ -61,7 +61,8 @@ templates/
   base.html                  HTML scaffolding, loads /static/cv.css
   cv.html                    CV markup (hardcoded content, two-column layout)
 static/
-  src/cv.css                 Tailwind source (@import "tailwindcss" + @theme tokens + @page / @media print)
+  src/cv.css                 Tailwind entry (@import "tailwindcss" + @source + @import "./styles.css")
+  src/styles.css             custom CSS (@font-face + @theme tokens + @layer components + @page / @media print)
   cv.css                     built output (loaded by the browser AND WeasyPrint)
 scripts/
   install-tailwind.sh        downloads the platform's Tailwind v4 standalone binary
@@ -69,7 +70,7 @@ scripts/
 bin/tailwindcss              standalone Tailwind binary (gitignored)
 ```
 
-To change the CV: edit `templates/cv.html` (content) and `static/src/cv.css` (custom theme tokens + components). The watcher rebuilds `static/cv.css` automatically.
+To change the CV: edit `templates/cv.html` (content) and `static/src/styles.css` (theme tokens, fonts, and components). The watcher rebuilds `static/cv.css` automatically.
 
 ---
 
@@ -140,9 +141,19 @@ The Coolify deploy and the Pages deploy are independent — pushing to `master` 
 
 ## Typography
 
-The CV uses [**Inter**](https://rsms.me/inter/), self-hosted from `static/fonts/`. Two variable `.woff2` files (one normal, one italic — Latin subset, ~73 KB total) cover every weight the template uses. Because the font ships with the app, PDFs are typographically identical whether they come out of `uv run fastapi dev` on macOS, the Coolify container, or the GitHub Pages CI build.
+Two self-hosted families from `static/fonts/`:
 
-To swap or update Inter, replace the two files in `static/fonts/`. The current files came from Google Fonts v20 — to refresh, fetch the CSS at `https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap` with a recent Chrome User-Agent and grab the latin-subset `.woff2` URLs from the response. Inter is licensed under the [SIL Open Font License](https://github.com/rsms/inter/blob/master/LICENSE.txt).
+* [**IBM Plex Sans**](https://www.ibm.com/plex/) for body text — one variable `.woff2` covering weights 400–600 normal, one for italic (Latin subset).
+* [**Inconsolata**](https://fonts.google.com/specimen/Inconsolata) for contact details, GitHub handle, and tech tags — one variable `.woff2` covering weights 400–700 (Latin subset).
+
+Three `.woff2` files, ~111 KB total. Because the fonts ship with the app, PDFs are typographically identical whether they come out of `uv run fastapi dev` on macOS, the Coolify container, or the GitHub Pages CI build.
+
+To swap or update, replace the files in `static/fonts/`. The current files came from Google Fonts — to refresh, fetch each CSS endpoint with a recent Chrome User-Agent and grab the latin-subset `.woff2` URL from the response:
+
+* IBM Plex Sans: `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400..600;1,400..600&display=swap`
+* Inconsolata: `https://fonts.googleapis.com/css2?family=Inconsolata:wght@400..700&display=swap`
+
+Both fonts are licensed under the [SIL Open Font License](https://opensource.org/licenses/OFL-1.1).
 
 ---
 
