@@ -56,6 +56,9 @@
   --color-cv-secondary-mid: #0ea5e9;   /* sky-500 */
   --color-cv-secondary-soft: #38bdf8;  /* sky-400 */
 
+  /* LINK (rose) — applied to anchor text in the contact list */
+  --color-cv-link: #be123c;            /* rose-700 */
+
   --font-cv-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-cv-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -108,7 +111,7 @@
   }
 
   .cv-contact-list a {
-    @apply text-cv-ink underline-offset-2;
+    @apply text-cv-link underline-offset-2;
     overflow-wrap: anywhere;
   }
 
