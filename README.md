@@ -144,14 +144,14 @@ The Coolify deploy and the Pages deploy are independent — pushing to `master` 
 Two self-hosted families from `static/fonts/`:
 
 * [**IBM Plex Sans**](https://www.ibm.com/plex/) for body text — one variable `.woff2` covering weights 400–600 normal, one for italic (Latin subset).
-* [**Inconsolata**](https://fonts.google.com/specimen/Inconsolata) for contact details, GitHub handle, and tech tags — one variable `.woff2` covering weights 400–700 (Latin subset).
+* [**IBM Plex Mono**](https://www.ibm.com/plex/) for contact details, GitHub handle, and tech tags — three static `.woff2` files: regular 400, italic 400, semibold 600 (Latin subset). IBM Plex Mono is not variable on Google Fonts, so each weight/style ships separately. WeasyPrint won't synthesize italics, so the dedicated italic file is required for slanted text in the PDF.
 
-Three `.woff2` files, ~111 KB total. Because the fonts ship with the app, PDFs are typographically identical whether they come out of `uv run fastapi dev` on macOS, the Coolify container, or the GitHub Pages CI build.
+Five `.woff2` files. Because the fonts ship with the app, PDFs are typographically identical whether they come out of `uv run fastapi dev` on macOS, the Coolify container, or the GitHub Pages CI build.
 
 To swap or update, replace the files in `static/fonts/`. The current files came from Google Fonts — to refresh, fetch each CSS endpoint with a recent Chrome User-Agent and grab the latin-subset `.woff2` URL from the response:
 
 * IBM Plex Sans: `https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400..600;1,400..600&display=swap`
-* Inconsolata: `https://fonts.googleapis.com/css2?family=Inconsolata:wght@400..700&display=swap`
+* IBM Plex Mono: `https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap`
 
 Both fonts are licensed under the [SIL Open Font License](https://opensource.org/licenses/OFL-1.1).
 

@@ -7,7 +7,7 @@ What ends up in dist/:
   cv.pdf             — PDF generated via WeasyPrint (filename matches the <a href>)
   static/cv.css      — built Tailwind output (post-processed for WeasyPrint compat)
   static/photo.jpg   — copied as-is
-  static/fonts/*     — IBM Plex Sans + Inconsolata .woff2 files, copied as-is
+  static/fonts/*     — IBM Plex Sans + IBM Plex Mono .woff2 files, copied as-is
   .nojekyll          — opt out of Jekyll on GitHub Pages
 
 Usage:

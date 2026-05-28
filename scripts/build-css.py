@@ -84,6 +84,15 @@ OKLCH_RE = re.compile(
 
 INFINITY_CALC_RE = re.compile(r"calc\(\s*infinity\s*\*\s*1px\s*\)")
 
+# Tailwind v4 emits `color-mix(in srgb, #HEX P%, transparent)` as the sRGB
+# fallback for `text-x-y/N` / `bg-x-y/N` opacity modifiers (paired with a more
+# precise oklab variant in `@supports`). WeasyPrint 67 can't compute either —
+# the srgb form resolves to `None` on the text-color path and crashes
+# `draw_text`. Pre-resolving to a plain `rgba()` avoids the issue.
+COLOR_MIX_SRGB_TRANSPARENT_RE = re.compile(
+    r"color-mix\(\s*in\s+srgb\s*,\s*(#[0-9a-fA-F]{3,8})\s+([\d.]+)%\s*,\s*transparent\s*\)"
+)
+
 # CSS logical properties → physical pair(s). WeasyPrint 67 ignores logical
 # properties entirely (silently drops them), and Tailwind v4 emits them for
 # every `px-*`, `py-*`, `mx-*`, `my-*`, `space-y-*`, etc. — so without this
@@ -115,6 +124,7 @@ LOGICAL_PROPS: dict[str, tuple[str, ...]] = {
 
 def transform_for_weasyprint(css: str) -> str:
     css = _replace_oklch(css)
+    css = COLOR_MIX_SRGB_TRANSPARENT_RE.sub(_color_mix_srgb_to_rgba, css)
     css = INFINITY_CALC_RE.sub("9999px", css)
     rules = tinycss2.parse_stylesheet(css, skip_comments=True, skip_whitespace=True)
     out: list[str] = []
@@ -124,6 +134,16 @@ def transform_for_weasyprint(css: str) -> str:
 
 def _replace_oklch(css: str) -> str:
     return OKLCH_RE.sub(_oklch_match_to_color, css)
+
+
+def _color_mix_srgb_to_rgba(m: re.Match) -> str:
+    h = m.group(1).lstrip("#")
+    if len(h) == 3:
+        r, g, b = (int(c * 2, 16) for c in h)
+    else:
+        r, g, b = int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+    alpha = float(m.group(2)) / 100
+    return f"rgba({r}, {g}, {b}, {alpha:g})"
 
 
 def _oklch_match_to_color(m: re.Match) -> str:
@@ -225,6 +245,11 @@ def _process(
                 _process(out, inner_items, selector_chain, new_media, supports_chain)
             elif keyword == "supports" and item.content is not None:
                 cond = serialize(item.prelude).strip()
+                if "color-mix" in cond:
+                    # WeasyPrint can't compute `color-mix(in oklab, var(--name) P%, transparent)`
+                    # inside the @supports body; the sibling srgb fallback (already rewritten
+                    # to rgba above) handles things.
+                    continue
                 new_supports = (
                     cond if not supports_chain else f"{supports_chain} and ({cond})"
                 )

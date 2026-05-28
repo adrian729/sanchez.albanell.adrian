@@ -1,4 +1,4 @@
-/* Self-hosted IBM Plex Sans (body) + Inconsolata (mono accents).
+/* Self-hosted IBM Plex Sans (body) + IBM Plex Mono (mono accents).
    Variable .woff2, Latin subset. URLs are relative to this file's location so
    they resolve under both `/static/cv.css` (browser) and the on-disk path
    WeasyPrint sees. README documents how to refresh. */
@@ -17,11 +17,25 @@
   src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Inconsolata';
+  font-family: 'IBM Plex Mono';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
-  src: url('fonts/Inconsolata.woff2') format('woff2');
+  src: url('fonts/IBMPlexMono.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
 }
 
 @theme {
@@ -43,13 +57,13 @@
   --color-cv-secondary-soft: #38bdf8;  /* sky-400 */
 
   --font-cv-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-  --font-cv-mono: 'Inconsolata', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-cv-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @layer components {
   .cv-page {
     @apply mx-auto max-w-[840px] my-6 text-cv-ink font-cv-sans text-[10.5pt] leading-relaxed shadow-sm min-h-[29.7cm] print:my-0 print:shadow-none print:max-w-none;
-    background: linear-gradient(to right, var(--color-cv-sidebar) 260px, var(--color-zinc-50) 260px);
+    background: linear-gradient(to right, var(--color-cv-sidebar) 300px, var(--color-zinc-50) 300px);
   }
 
   .cv-page + .cv-page {
@@ -78,7 +92,7 @@
   }
 
   .cv-sidebar {
-    @apply table-cell w-[260px] align-top space-y-6 p-6 pr-4;
+    @apply table-cell w-[300px] align-top space-y-6 p-6 pr-4;
   }
 
   .cv-main {
@@ -99,13 +113,14 @@
   }
 
   .cv-icon {
+    /* Fill is set via inline `style` on each SVG element — WeasyPrint does not
+       apply class-rule CSS to SVG fill, but inline style works in both engines. */
     display: inline-block;
     width: 1em;
     height: 1em;
     vertical-align: -0.15em;
     margin-right: 0.4em;
     flex-shrink: 0;
-    fill: var(--color-cv-muted);
   }
 
   .cv-skill-row {
@@ -145,7 +160,7 @@
   }
 
   .cv-bullets {
-    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-teal-500;
+    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-teal-500 marker:text-[12pt];
   }
 
   .cv-tech {
