@@ -2,7 +2,6 @@
 
 **Name:** Adrián Sánchez Albanell
 **Title:** Software Engineer
-**Born:** 1993, Barcelona, Spain
 
 **Profile:** Software engineer with six years of experience shipping production software. My work spans enterprise web platforms for global brands (Lufthansa, UBS), greenfield SaaS development from PoC to MVP, and real-time systems with 3D visualization. I lead features end-to-end across stacks (Java, Python, and TypeScript among them).
 
@@ -11,12 +10,12 @@
 ## Contact
 
 - **Email:** sanchez.albanell.adrian@gmail.com
-- **Phone:** +49 1762 3382441
+- **Phone:** +4917623382441
 - **Location:** Munich, Germany
-- **Open to:** remote-first; hybrid or on-site in the Munich area
-- **GitHub:** [github.com/adrian729](https://github.com/adrian729)
-- **LinkedIn:** [linkedin.com/in/adrian-sanchez-albanell](https://linkedin.com/in/adrian-sanchez-albanell)
-- **Xing:** [xing.com/profile/Adrian_SanchezAlbanell](https://xing.com/profile/Adrian_SanchezAlbanell)
+- _Remote-first; hybrid or on-site in the Munich area_
+- **GitHub:** [@adrian729](https://github.com/adrian729)
+- **LinkedIn:** [linkedin/adrian-sanchez-albanell](https://linkedin.com/in/adrian-sanchez-albanell)
+- **Xing:** [xing/Adrian_SanchezAlbanell](https://xing.com/profile/Adrian_SanchezAlbanell)
 
 ---
 
@@ -31,7 +30,7 @@ APIs:         REST, GraphQL, OpenAPI
 Testing:      Django TestCase, factory-boy, model_bakery, JUnit5
 Infra:        Docker, Kubernetes, Bazel, GitHub Actions, Git
 AI Tools:     Claude Code, GitHub Copilot, Cursor, OpenCode
-Methodology:  Scrum, Kanban
+Method:       Scrum, Kanban
 ```
 
 ### Spoken Languages
@@ -45,13 +44,13 @@ Methodology:  Scrum, Kanban
 
 ## Work Experience
 
-### Software Engineer — Daedalus (Karlsruhe)
+### Senior Software Engineer — Daedalus (Karlsruhe, Germany · hybrid / remote)
 
 **10/2024 – present** — _React / Django_
 
-- Built the touchscreen HMIs deployed at every CNC machine (four screens per machine, covering production, transportation, cleanup, notes, and technical drawings), used daily by shopfloor workers.
+- Shipped the touchscreen HMIs deployed at every CNC machine (four screens per machine, covering production, transportation, cleanup, notes, and technical drawings), used daily by shopfloor workers.
 - Built the 3D shopfloor views (Three.js / R3F): the live Transportation Screen and the 3D infowall covering the whole shopfloor, both tracking machines, robots, racks, and pallets in real time, plus the underlying rendering primitives that scale to thousands of elements per scene and drive the part displays at each CNC machine.
-- Designed, built, and shipped the task orchestrator end-to-end, with a pluggable strategy layer dispatching work across machines and workers on the shopfloor.
+- Designed, built, and shipped the task orchestrator end-to-end, a system that dispatches shopfloor work (setup, tending, cleanup, and robot assistance) across machines and CNC operators, with a pluggable strategy layer matching each task to the best-qualified worker.
 - Led the team that built the work-preparation (AV) tasks page, and built the Customer Claims 8D quality workflow end-to-end: data model, multi-step wizard, PDF export, and Slack integration.
 - Implemented the ticket scheduling and traffic-light system that plans what runs on each machine and when, ensuring all tools and resources are ready before each ticket starts.
 - Authored the team's Claude Code skills and Copilot instructions, codifying backend, frontend, and microservices standards.
@@ -60,21 +59,20 @@ Methodology:  Scrum, Kanban
 
 ---
 
-### Software Engineer — VamosRural (Barcelona, remote)
+### Senior Software Engineer — VamosRural (Barcelona, Spain · remote)
 
 **01/2023 – 06/2025** — _Next.js / Django_
-_Full-time 08/2023 – 09/2024; part-time alongside Cognizant Netcentric and Daedalus otherwise_
 
 - Designed and built VamosRural, a two-sided marketplace for rural tourism activities in northern Spain, taking it from PoC through MVP and into ongoing operation.
 - Owned the Django REST backend, covering activities and scheduling, provider and traveler accounts, reservations, full-text search, reviews, and transactional email.
-- Built the Next.js frontend with multi-role dashboards (provider, traveler, admin), maps for location-based activity discovery, and internationalization across five languages.
+- Implemented the Next.js frontend with multi-role dashboards (provider, traveler, admin), maps for location-based activity discovery, and internationalization across five languages.
 - Shipped product enhancements supporting both providers and customers as the platform grew to 1,000+ rural activities and 350+ onboarded providers.
 
 **Tech:** Next.js (App Router), TypeScript, Python, Django REST, PostgreSQL, NextAuth, Sentry, Docker, MinIO, Git, Kanban
 
 ---
 
-### Backend Software Engineer — Cognizant Netcentric (Barcelona, remote)
+### Software Engineer — Cognizant Netcentric (Barcelona, Spain · remote)
 
 **09/2019 – 07/2023** — _Java / AEM_
 
@@ -86,7 +84,7 @@ _Full-time 08/2023 – 09/2024; part-time alongside Cognizant Netcentric and Dae
 
 ---
 
-### Researcher / Developer — Inlab FIB (UPC), Barcelona
+### Researcher / Developer — Inlab FIB (UPC), Barcelona, Spain
 
 **06/2018 – 08/2019** — _Bachelor Thesis Program_
 
@@ -98,7 +96,7 @@ _Full-time 08/2023 – 09/2024; part-time alongside Cognizant Netcentric and Dae
 
 ---
 
-### Web Developer — Inlab FIB (UPC), Barcelona
+### Web Developer — Inlab FIB (UPC), Barcelona, Spain
 
 **05/2016 – 05/2018** — _Internship_
 
@@ -115,6 +113,13 @@ _Full-time 08/2023 – 09/2024; part-time alongside Cognizant Netcentric and Dae
 ### Bachelor in Software Engineering — Polytechnic University of Catalonia (UPC), Barcelona
 
 **07/2013 – 08/2019** — Specialization in Computer Science
+
+---
+
+## Background
+
+- Born 1993, Barcelona, Spain
+- EU citizen — no work permit needed
 
 ---
 
@@ -137,4 +142,4 @@ Built several guitar and bass pedals and other music devices, either from availa
 
 - **Lua** — Neovim, Love2D
 - **JUCE** — audio plugin framework for C++
-- **Godot** game engine — GDScript / C#
+- **Godot** — GDScript / C#
