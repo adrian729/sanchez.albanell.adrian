@@ -146,7 +146,7 @@ button, input:where([type="button"], [type="reset"], [type="submit"]) { appearan
 .cv-card { break-inside: avoid; }
 .cv-card + .cv-card { margin-top: calc(var(--spacing) * 4); border-top-style: var(--tw-border-style); border-top-width: 1px; border-color: var(--color-cv-rule); padding-top: calc(var(--spacing) * 4); }
 .cv-card-head { margin-bottom: calc(var(--spacing) * 3); }
-.cv-role { font-size: 10pt; --tw-font-weight: var(--font-weight-semibold); font-weight: var(--font-weight-semibold); color: var(--color-cv-ink); }
+.cv-role { font-size: 10pt; --tw-font-weight: var(--font-weight-semibold); font-weight: var(--font-weight-semibold); white-space: nowrap; color: var(--color-cv-ink); }
 .cv-role-location { margin-left: calc(var(--spacing) * 2); font-size: 8pt; --tw-font-weight: var(--font-weight-normal); font-weight: var(--font-weight-normal); color: var(--color-cv-muted); }
 .cv-meta { margin-top: calc(var(--spacing) * 0.5); display: flex; flex-wrap: wrap; column-gap: calc(var(--spacing) * 2); font-size: 9.5pt; color: var(--color-cv-muted); }
 .cv-meta-tag { background-color: rgba(203, 251, 241, 0.5); }

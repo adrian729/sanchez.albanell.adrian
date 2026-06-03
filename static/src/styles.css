@@ -165,7 +165,7 @@
   }
 
   .cv-role {
-    @apply font-semibold text-[10pt] text-cv-ink;
+    @apply font-semibold text-[10pt] text-cv-ink whitespace-nowrap;
   }
 
   .cv-role-location {
