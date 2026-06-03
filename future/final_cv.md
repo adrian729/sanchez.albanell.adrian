@@ -22,7 +22,7 @@
 ## Skills
 
 ```
-Languages:    Python, TypeScript, Java
+Languages:    TypeScript, Python, Java
 Frontend:     React, Vue, Next.js, Nuxt, Three.js / R3F, TailwindCSS, Material UI
 Backend:      Django / DRF, Groovy
 Data:         PostgreSQL, SQLite, Neo4j, scikit-learn, pandas
@@ -49,10 +49,11 @@ Method:       Scrum, Kanban
 **10/2024 – present** — _React / Django_
 
 - Shipped the touchscreen HMIs deployed at every CNC machine (four screens per machine, covering production, transportation, cleanup, notes, and technical drawings), used daily by shopfloor workers.
+- Developed a digital-twin system giving physical parts end-to-end traceability, cutting lost and untracked parts by ~80% and automating quality and rework workflows.
 - Built the 3D shopfloor views (Three.js / R3F): the live Transportation Screen and the 3D infowall covering the whole shopfloor, both tracking machines, robots, racks, and pallets in real time, plus the underlying rendering primitives that scale to thousands of elements per scene and drive the part displays at each CNC machine.
 - Designed, built, and shipped the task orchestrator end-to-end, a system that dispatches shopfloor work (setup, tending, cleanup, and robot assistance) across machines and CNC operators, with a pluggable strategy layer matching each task to the best-qualified worker.
 - Led the team that built the work-preparation (AV) tasks page, and built the Customer Claims 8D quality workflow end-to-end: data model, multi-step wizard, PDF export, and Slack integration.
-- Implemented the ticket scheduling and traffic-light system that plans what runs on each machine and when, ensuring all tools and resources are ready before each ticket starts.
+- Implemented the ticket scheduling and traffic-light system that plans what runs on each machine and when, reducing machine idle time ~15% by ensuring all tools and resources are ready before each ticket starts.
 - Authored the team's Claude Code skills and Copilot instructions, codifying backend, frontend, and microservices standards.
 
 **Tech:** React, TypeScript, Three.js / R3F, Material UI, Python, Django REST, PostgreSQL, Bazel, Kubernetes, Git, Kanban, Claude Code, Copilot, Gemini
@@ -127,7 +128,7 @@ Method:       Scrum, Kanban
 
 ### Music
 
-I have been part of two bands as the bass player and always worked to keep improving myself and learning new things.
+I have been part of two bands as the bass player and always worked to keep improving myself and learning new things, most recently the transverse flute.
 
 - **Empty Streets (2019 – 2023)** — Indie / Dream Pop / Shoegaze band. Performed on stage in bars, small venues, and a festival. Recorded two singles and an EP (_Northern Lights_).
 - **VOID (2011 – 2019)** — Indie / alternative rock band. Performed on stage several times every year at small venues and festivals.
@@ -138,8 +139,9 @@ Built several guitar and bass pedals and other music devices, either from availa
 
 ---
 
-## Personal Tech Projects
+## Personal Learning
 
+- **Rust** — Bevy, Leptos
 - **Lua** — Neovim, Love2D
 - **JUCE** — audio plugin framework for C++
 - **Godot** — GDScript / C#

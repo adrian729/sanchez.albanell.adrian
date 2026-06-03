@@ -72,14 +72,28 @@ button, input:where([type="button"], [type="reset"], [type="submit"]) { appearan
 @font-face {
   font-family: "IBM Plex Sans";
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/IBMPlexSans.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 600;
   font-display: swap;
   src: url("fonts/IBMPlexSans.woff2") format("woff2");
 }
 @font-face {
   font-family: "IBM Plex Sans";
   font-style: italic;
-  font-weight: 400 600;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/IBMPlexSans-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: italic;
+  font-weight: 600;
   font-display: swap;
   src: url("fonts/IBMPlexSans-Italic.woff2") format("woff2");
 }
@@ -104,7 +118,7 @@ button, input:where([type="button"], [type="reset"], [type="submit"]) { appearan
   font-display: swap;
   src: url("fonts/IBMPlexMono-SemiBold.woff2") format("woff2");
 }
-.cv-page { margin-left: auto; margin-right: auto; margin-top: calc(var(--spacing) * 6); margin-bottom: calc(var(--spacing) * 6); min-height: 29.7cm; max-width: 840px; font-family: var(--font-cv-sans); font-size: 10.5pt; --tw-leading: var(--leading-relaxed); line-height: var(--leading-relaxed); color: var(--color-cv-ink); --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
+.cv-page { margin-left: auto; margin-right: auto; margin-top: calc(var(--spacing) * 6); margin-bottom: calc(var(--spacing) * 6); min-height: 29.7cm; max-width: 21cm; font-family: var(--font-cv-sans); font-size: 10.5pt; --tw-leading: var(--leading-relaxed); line-height: var(--leading-relaxed); color: var(--color-cv-ink); --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)); box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); }
 @media print { .cv-page { margin-top: calc(var(--spacing) * 0); margin-bottom: calc(var(--spacing) * 0); } }
 @media print { .cv-page { max-width: none; } }
 @media print { .cv-page { --tw-shadow: 0 0 #0000; box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow); } }
@@ -132,8 +146,8 @@ button, input:where([type="button"], [type="reset"], [type="submit"]) { appearan
 .cv-card { break-inside: avoid; }
 .cv-card + .cv-card { margin-top: calc(var(--spacing) * 4); border-top-style: var(--tw-border-style); border-top-width: 1px; border-color: var(--color-cv-rule); padding-top: calc(var(--spacing) * 4); }
 .cv-card-head { margin-bottom: calc(var(--spacing) * 3); }
-.cv-role { font-size: 10.5pt; --tw-font-weight: var(--font-weight-semibold); font-weight: var(--font-weight-semibold); color: var(--color-cv-ink); }
-.cv-role-location { margin-left: calc(var(--spacing) * 3); font-size: 9pt; --tw-font-weight: var(--font-weight-normal); font-weight: var(--font-weight-normal); color: var(--color-cv-muted); }
+.cv-role { font-size: 10pt; --tw-font-weight: var(--font-weight-semibold); font-weight: var(--font-weight-semibold); color: var(--color-cv-ink); }
+.cv-role-location { margin-left: calc(var(--spacing) * 2); font-size: 8pt; --tw-font-weight: var(--font-weight-normal); font-weight: var(--font-weight-normal); color: var(--color-cv-muted); }
 .cv-meta { margin-top: calc(var(--spacing) * 0.5); display: flex; flex-wrap: wrap; column-gap: calc(var(--spacing) * 2); font-size: 9.5pt; color: var(--color-cv-muted); }
 .cv-meta-tag { background-color: rgba(203, 251, 241, 0.5); }
 .cv-meta-tag { padding-left: calc(var(--spacing) * 1.25); padding-right: calc(var(--spacing) * 1.25); padding-top: calc(var(--spacing) * 0.25); padding-bottom: calc(var(--spacing) * 0.25); font-family: var(--font-cv-mono); color: var(--color-teal-800); font-style: italic; }

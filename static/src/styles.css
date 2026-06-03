@@ -2,17 +2,35 @@
    Variable .woff2, Latin subset. URLs are relative to this file's location so
    they resolve under both `/static/cv.css` (browser) and the on-disk path
    WeasyPrint sees. README documents how to refresh. */
+/* IBM Plex Sans is a variable woff2 with a weight axis. WeasyPrint 67 rejects the
+   variable-range descriptor `font-weight: 400 600` as an invalid value and drops the
+   weight, so its bold heading isn't a true SemiBold. Declaring explicit single-weight
+   faces (both pointing at the same variable file) is accepted by both engines. */
 @font-face {
   font-family: 'IBM Plex Sans';
   font-style: normal;
-  font-weight: 400 600;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexSans.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
   font-display: swap;
   src: url('fonts/IBMPlexSans.woff2') format('woff2');
 }
 @font-face {
   font-family: 'IBM Plex Sans';
   font-style: italic;
-  font-weight: 400 600;
+  font-weight: 400;
+  font-display: swap;
+  src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: italic;
+  font-weight: 600;
   font-display: swap;
   src: url('fonts/IBMPlexSans-Italic.woff2') format('woff2');
 }
@@ -65,7 +83,7 @@
 
 @layer components {
   .cv-page {
-    @apply mx-auto max-w-[840px] my-6 text-cv-ink font-cv-sans text-[10.5pt] leading-relaxed shadow-sm min-h-[29.7cm] print:my-0 print:shadow-none print:max-w-none;
+    @apply mx-auto max-w-[21cm] my-6 text-cv-ink font-cv-sans text-[10.5pt] leading-relaxed shadow-sm min-h-[29.7cm] print:my-0 print:shadow-none print:max-w-none;
     background: linear-gradient(to right, var(--color-cv-sidebar) 300px, var(--color-zinc-50) 300px);
   }
 
@@ -147,11 +165,11 @@
   }
 
   .cv-role {
-    @apply font-semibold text-[10.5pt] text-cv-ink;
+    @apply font-semibold text-[10pt] text-cv-ink;
   }
 
   .cv-role-location {
-    @apply ml-3 text-[9pt] text-cv-muted font-normal;
+    @apply ml-2 text-[8pt] text-cv-muted font-normal;
   }
 
   .cv-meta {
