@@ -181,7 +181,25 @@
   }
 
   .cv-bullets {
-    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-disc pl-5 marker:text-teal-500 marker:text-[12pt];
+    @apply mt-2 space-y-1.5 text-[10pt] leading-[1.5] list-none pl-5;
+  }
+
+  /* Native `disc` markers diverge between engines: browsers paint a geometric
+     circle, WeasyPrint lays out the `•` glyph on the baseline (smaller, lower).
+     A real ::before box renders identically in both. */
+  .cv-bullets > li {
+    position: relative;
+  }
+
+  .cv-bullets > li::before {
+    content: '';
+    position: absolute;
+    left: -0.85em;
+    top: 0.5em;
+    width: 0.42em;
+    height: 0.42em;
+    border-radius: 9999px;
+    background: var(--color-teal-500);
   }
 
   .cv-tech {
