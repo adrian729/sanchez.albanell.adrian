@@ -37,6 +37,7 @@
 
   <section>
     <h2 class="cv-section-title pb-1">Personal Projects</h2>
+    <p id="typewriter" class="mt-6 mb-4 font-cv-mono font-semibold text-xs text-teal-600/80"><span id="typewriter-word">software</span><span id="typewriter-cursor" class="inline-block motion-safe:animate-blink">_</span></p>
     <ul class="divide-y divide-cv-rule">
       <li class="py-4">
         <p class="flex items-baseline justify-between gap-4">
@@ -137,6 +138,51 @@
     }
     window.addEventListener("hashchange", render);
     render();
+  })();
+</script>
+<script>
+  (function () {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.getElementById("typewriter").hidden = true;
+      return;
+    }
+    var words = ["software", "game design", "music", "audio", "programming", "software design", "system design", "software architecture", "design", "cats", "cats"];
+    var SPEED = 100, DELETE_SPEED = 40, HOLD = 3000, PAUSE = 1000;
+    var wordEl = document.getElementById("typewriter-word");
+    var cursorEl = document.getElementById("typewriter-cursor");
+    var idx = -1;
+    function setBlink(on) {
+      cursorEl.classList.toggle("motion-safe:animate-blink", on);
+    }
+    function type(rest) {
+      if (!rest.length) {
+        setBlink(true);
+        setTimeout(erase, HOLD);
+        return;
+      }
+      wordEl.textContent += rest[0];
+      setBlink(false);
+      setTimeout(function () { type(rest.slice(1)); }, SPEED);
+    }
+    function erase() {
+      var text = wordEl.textContent;
+      if (!text.length) {
+        setBlink(true);
+        setTimeout(next, PAUSE);
+        return;
+      }
+      wordEl.textContent = text.slice(0, -1);
+      setBlink(false);
+      setTimeout(erase, DELETE_SPEED);
+    }
+    function next() {
+      var last = idx;
+      do { idx = Math.floor(Math.random() * words.length); } while (idx === last);
+      wordEl.textContent = "";
+      setBlink(true);
+      type(words[idx]);
+    }
+    next();
   })();
 </script>
 {% endblock %}

@@ -79,6 +79,12 @@
 
   --font-cv-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
   --font-cv-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* Typewriter cursor on the homepage section title (browser-only; WeasyPrint ignores animations) */
+  --animate-blink: cv-blink 1s steps(2, start) infinite;
+  @keyframes cv-blink {
+    to { visibility: hidden; }
+  }
 }
 
 @layer components {
