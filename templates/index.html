@@ -3,6 +3,7 @@
 {% block title %}Adrián Sánchez Albanell{% endblock %}
 
 {% block content %}
+{% from "cv.html" import icon_envelope, icon_github, icon_linkedin, icon_xing, icon_play, icon_download, icon_eye %}
 <noscript><style>[data-route]{display:block!important}</style></noscript>
 
 <section data-route="home" class="mx-auto max-w-2xl px-4 sm:px-6 py-14 sm:py-20 font-cv-sans text-cv-ink flex flex-col gap-18">
@@ -18,7 +19,7 @@
       across stacks (Java, Python, and TypeScript among them).
     </p>
     <p class="mt-4">
-      <a href="mailto:sanchez.albanell.adrian@gmail.com" class="font-cv-mono text-sm text-cv-link hover:text-rose-900 transition-colors">sanchez.albanell.adrian@gmail.com</a>
+      <a href="mailto:sanchez.albanell.adrian@gmail.com" class="font-cv-mono text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_envelope('currentColor') }}sanchez.albanell.adrian@gmail.com</a>
     </p>
   </header>
 
@@ -28,13 +29,11 @@
         <img src="cv-preview.png" alt="First page of my CV" width="176" height="249" class="w-44 border border-cv-rule shadow-sm">
       </a>
       <div class="flex gap-6 text-sm">
-        <a href="#/cv" class="text-cv-link hover:text-rose-900 transition-colors">view CV</a>
-        <a href="cv.pdf" download="{{ pdf_filename }}" rel="noopener" class="text-cv-link hover:text-rose-900 transition-colors">download PDF</a>
+        <a href="#/cv" aria-label="View CV" class="text-cv-link hover:text-rose-900 transition-colors">{{ icon_eye('currentColor') }}CV</a>
+        <a href="cv.pdf" download="{{ pdf_filename }}" rel="noopener" aria-label="Download PDF" class="text-cv-link hover:text-rose-900 transition-colors">{{ icon_download('currentColor') }}PDF</a>
       </div>
     </div>
   </section>
-
-  {% from "cv.html" import icon_envelope, icon_github, icon_linkedin, icon_xing, icon_play %}
 
   <section>
     <h2 class="cv-section-title pb-1">Personal Projects</h2>
