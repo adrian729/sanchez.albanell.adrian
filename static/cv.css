@@ -36,7 +36,9 @@ textarea { resize: vertical; }
 button, input:where([type="button"], [type="reset"], [type="submit"]) { appearance: button; }
 ::-webkit-inner-spin-button, ::-webkit-outer-spin-button { height: auto; }
 [hidden]:where(:not([hidden="until-found"])) { display: none !important; }
+.visible { visibility: visible; }
 .absolute { position: absolute; }
+.fixed { position: fixed; }
 .relative { position: relative; }
 .static { position: static; }
 .mt-1 { margin-top: calc(var(--spacing) * 1); }
