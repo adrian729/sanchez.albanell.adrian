@@ -1,4 +1,7 @@
-@import "tailwindcss";
+/* source(none) disables Tailwind's automatic source detection (which scans the
+   whole repo and picks up utility-shaped strings in docs like CLAUDE.md);
+   only the explicit @source below is scanned. */
+@import "tailwindcss" source(none);
 @import "./styles.css";
 
 @source "../../templates/**/*.html";

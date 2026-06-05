@@ -63,8 +63,8 @@
   --color-cv-muted: #71717a;       /* zinc-500 */
   --color-cv-rule: #e4e4e7;        /* zinc-200 */
   --color-cv-sidebar: #e4e4e7;     /* zinc-200 */
-  --color-cv-accent: #18181b;      /* zinc-900 — currently applied to section title / tech tag / CTA */
-  --color-cv-accent-soft: #a1a1aa; /* zinc-400 — currently applied to bullet markers */
+  --color-cv-accent: #18181b;      /* zinc-900 — currently applied to section title / download + back buttons */
+  --color-cv-accent-soft: #a1a1aa; /* zinc-400 — defined, not yet applied to any rule */
 
   /* PRIMARY (teal) — defined, not yet applied to any rule */
   --color-cv-primary: #134e4a;     /* teal-900 */

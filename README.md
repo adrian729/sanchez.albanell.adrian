@@ -7,7 +7,7 @@ A FastAPI app serving a small hash-routed portfolio SPA (HomePage + CV page) plu
 ## Routes
 
 * `GET /` — SPA: HomePage at `/` (or `#/`), CV at `#/cv` (client-side hash routing, works on static hosts)
-* `GET /cv.pdf` — the same CV fragment rendered to PDF (returned inline)
+* `GET /cv.pdf` — the same CV fragment rendered to PDF (returned as a download via `Content-Disposition: attachment`)
 * `GET /cv-preview.png` — PNG of the PDF's first page (home-page thumbnail, cached in-process after the first render)
 * `GET /health` — health check
 
