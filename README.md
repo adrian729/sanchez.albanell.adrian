@@ -8,6 +8,7 @@ A FastAPI app serving a small hash-routed portfolio SPA (HomePage + CV page) plu
 
 * `GET /` — SPA: HomePage at `/` (or `#/`), CV at `#/cv` (client-side hash routing, works on static hosts)
 * `GET /cv.pdf` — the same CV fragment rendered to PDF (returned inline)
+* `GET /cv-preview.png` — PNG of the PDF's first page (home-page thumbnail, cached in-process after the first render)
 * `GET /health` — health check
 
 ---
@@ -16,6 +17,7 @@ A FastAPI app serving a small hash-routed portfolio SPA (HomePage + CV page) plu
 
 * **FastAPI[standard] ≥ 0.124.4** + **Jinja2** templates
 * **WeasyPrint ≥ 67.0** for PDF generation
+* **pypdfium2** to rasterize the PDF's first page into the home-page thumbnail
 * **Tailwind CSS v4** via the standalone CLI binary (no Node required)
 * **tinycss2** — used by the build script to post-process Tailwind's output for WeasyPrint compatibility (see *How the CSS pipeline works* below)
 * **uv** for Python dependency management
@@ -57,7 +59,8 @@ uv run fastapi dev app/main.py
 ## Project structure
 
 ```
-app/main.py                  FastAPI app: GET / (SPA), GET /cv.pdf (WeasyPrint), GET /health
+app/main.py                  FastAPI app: GET / (SPA), GET /cv.pdf (WeasyPrint), GET /cv-preview.png, GET /health
+app/pdf_preview.py           pypdfium2 helper: first PDF page → PNG thumbnail
 templates/
   base.html                  HTML scaffolding, loads /static/cv.css
   cv.html                    CV content fragment (hardcoded content, two-column layout)

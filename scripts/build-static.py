@@ -5,6 +5,7 @@ served by any static host (GitHub Pages, S3, a plain `python -m http.server`).
 What ends up in dist/:
   index.html         — rendered index.html (SPA shell: home + CV behind hash routes)
   cv.pdf             — PDF generated via WeasyPrint from cv_pdf.html (filename matches the <a href>)
+  cv-preview.png     — PNG of the PDF's first page (home-page thumbnail)
   static/cv.css      — built Tailwind output (post-processed for WeasyPrint compat)
   static/photo.jpg   — copied as-is
   static/fonts/*     — IBM Plex Sans + IBM Plex Mono .woff2 files, copied as-is
@@ -28,6 +29,7 @@ STATIC = ROOT / "static"
 
 sys.path.insert(0, str(ROOT))
 from app import PDF_FILENAME  # noqa: E402
+from app.pdf_preview import pdf_first_page_png  # noqa: E402
 
 
 def main() -> None:
@@ -50,6 +52,7 @@ def main() -> None:
         stylesheets=[CSS(str(STATIC / "cv.css"))]
     )
     (DIST / "cv.pdf").write_bytes(pdf_bytes)
+    (DIST / "cv-preview.png").write_bytes(pdf_first_page_png(pdf_bytes))
 
     shutil.copy(STATIC / "cv.css", DIST / "static" / "cv.css")
     shutil.copy(STATIC / "photo.jpg", DIST / "static" / "photo.jpg")

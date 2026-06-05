@@ -5,9 +5,83 @@
 {% block content %}
 <noscript><style>[data-route]{display:block!important}</style></noscript>
 
-<section data-route="home" class="min-h-screen flex flex-col items-center justify-center gap-4">
-  <h1 class="text-3xl font-semibold text-cv-ink">Hello, world</h1>
-  <a href="#/cv" class="text-zinc-600 underline underline-offset-4 hover:text-cv-ink transition-colors">View my CV</a>
+<section data-route="home" class="mx-auto max-w-2xl px-4 sm:px-6 py-14 sm:py-20 font-cv-sans text-cv-ink flex flex-col gap-18">
+
+  <header>
+    <h1 class="text-3xl font-semibold tracking-tight">Adrián Sánchez Albanell</h1>
+    <p class="mt-1 text-sm font-semibold uppercase tracking-[0.18em] text-teal-600">Software Engineer</p>
+    {# Keep in sync: manual duplicate of the .cv-profile paragraph in cv.html. Edit both. #}
+    <p class="mt-6 leading-relaxed text-cv-ink-soft">
+      Software engineer with more than six years of experience shipping production software. My work spans
+      enterprise web platforms for global brands (Lufthansa, UBS), greenfield SaaS development
+      from PoC to MVP, and real-time systems with 3D visualization. I lead features end-to-end
+      across stacks (Java, Python, and TypeScript among them).
+    </p>
+    <p class="mt-4">
+      <a href="mailto:sanchez.albanell.adrian@gmail.com" class="font-cv-mono text-sm text-cv-link hover:text-rose-900 transition-colors">sanchez.albanell.adrian@gmail.com</a>
+    </p>
+  </header>
+
+  <section>
+    <div class="flex flex-col items-center gap-4">
+      <a href="#/cv" aria-label="View my CV">
+        <img src="cv-preview.png" alt="First page of my CV" width="176" height="249" class="w-44 border border-cv-rule shadow-sm">
+      </a>
+      <div class="flex gap-6 text-sm">
+        <a href="#/cv" class="text-cv-link hover:text-rose-900 transition-colors">view CV</a>
+        <a href="cv.pdf" download="{{ pdf_filename }}" rel="noopener" class="text-cv-link hover:text-rose-900 transition-colors">download PDF</a>
+      </div>
+    </div>
+  </section>
+
+  {% from "cv.html" import icon_envelope, icon_github, icon_linkedin, icon_xing, icon_play %}
+
+  <section>
+    <h2 class="cv-section-title pb-1">Personal Projects</h2>
+    <ul class="divide-y divide-cv-rule">
+      <li class="py-4">
+        <p class="flex items-baseline justify-between gap-4">
+          <span class="flex items-baseline gap-3">
+            <span class="font-semibold">love-online</span>
+            <a href="https://love-online.adrian729.de/" target="_blank" rel="noopener" aria-label="Try love-online" title="Try love-online" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_play('currentColor') }}</a>
+          </span>
+          <a href="https://github.com/adrian729/love-online" target="_blank" rel="noopener" aria-label="love-online on GitHub" title="love-online on GitHub" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_github('currentColor') }}</a>
+        </p>
+        <p class="mt-1 text-cv-ink-soft">LÖVE minigames and procedural experiments (boids, fish, L-system forests, flow fields), playable on desktop and in the browser via love.js.</p>
+        <p class="mt-1.5 font-cv-mono text-xs text-teal-600">Lua · LÖVE</p>
+      </li>
+      <li class="py-4">
+        <p class="flex items-baseline justify-between gap-4">
+          <span class="flex items-baseline gap-3">
+            <span class="font-semibold">thalia</span>
+            <a href="https://adrian729.github.io/thalia/" target="_blank" rel="noopener" aria-label="Try thalia" title="Try thalia" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_play('currentColor') }}</a>
+          </span>
+          <a href="https://github.com/adrian729/thalia" target="_blank" rel="noopener" aria-label="thalia on GitHub" title="thalia on GitHub" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_github('currentColor') }}</a>
+        </p>
+        <p class="mt-1 text-cv-ink-soft">Browser synth pads built on the Web Audio API, with oscillators, a drum pad, and convolution reverb from sampled impulse responses.</p>
+        <p class="mt-1.5 font-cv-mono text-xs text-teal-600">TypeScript · React · Web Audio API · Tailwind</p>
+      </li>
+      <li class="py-4">
+        <p class="flex items-baseline justify-between gap-4">
+          <span class="flex items-baseline gap-3">
+            <span class="font-semibold">modusynth</span>
+            <a href="https://adrian729.github.io/modusynth/" target="_blank" rel="noopener" aria-label="Try modusynth" title="Try modusynth" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_play('currentColor') }}</a>
+          </span>
+          <a href="https://github.com/adrian729/modusynth" target="_blank" rel="noopener" aria-label="modusynth on GitHub" title="modusynth on GitHub" class="cv-icon-only text-sm text-cv-link hover:text-rose-900 transition-colors">{{ icon_github('currentColor') }}</a>
+        </p>
+        <p class="mt-1 text-cv-ink-soft">Simple synth with several modules to play around.</p>
+        <p class="mt-1.5 font-cv-mono text-xs text-teal-600">TypeScript · React · Web Audio API · Web MIDI API · Tailwind</p>
+      </li>
+    </ul>
+  </section>
+
+  <footer class="text-sm flex flex-wrap justify-center gap-x-6 gap-y-2">
+    <a href="mailto:sanchez.albanell.adrian@gmail.com" aria-label="Email" class="cv-icon-only text-cv-link hover:text-rose-900 transition-colors">{{ icon_envelope('currentColor') }}</a>
+    <a href="https://github.com/adrian729" target="_blank" rel="noopener" aria-label="GitHub" class="cv-icon-only text-cv-link hover:text-rose-900 transition-colors">{{ icon_github('currentColor') }}</a>
+    <a href="https://linkedin.com/in/adrian-sanchez-albanell" target="_blank" rel="noopener" aria-label="LinkedIn" class="cv-icon-only text-cv-link hover:text-rose-900 transition-colors">{{ icon_linkedin('currentColor') }}</a>
+    <a href="https://xing.com/profile/Adrian_SanchezAlbanell" target="_blank" rel="noopener" aria-label="Xing" class="cv-icon-only text-cv-link hover:text-rose-900 transition-colors">{{ icon_xing('currentColor') }}</a>
+  </footer>
+
 </section>
 
 <section data-route="cv" hidden>

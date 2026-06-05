@@ -144,6 +144,11 @@
     flex-shrink: 0;
   }
 
+  /* Icon-only links (home project links + footer contacts): no text, so no icon gap. */
+  .cv-icon-only .cv-icon {
+    margin-right: 0;
+  }
+
   .cv-skill-row {
     @apply flex flex-col text-[9pt] py-1;
   }

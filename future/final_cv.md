@@ -3,7 +3,7 @@
 **Name:** Adrián Sánchez Albanell
 **Title:** Software Engineer
 
-**Profile:** Software engineer with six years of experience shipping production software. My work spans enterprise web platforms for global brands (Lufthansa, UBS), greenfield SaaS development from PoC to MVP, and real-time systems with 3D visualization. I lead features end-to-end across stacks (Java, Python, and TypeScript among them).
+**Profile:** Software engineer with more than six years of experience shipping production software. My work spans enterprise web platforms for global brands (Lufthansa, UBS), greenfield SaaS development from PoC to MVP, and real-time systems with 3D visualization. I lead features end-to-end across stacks (Java, Python, and TypeScript among them).
 
 ---
 
