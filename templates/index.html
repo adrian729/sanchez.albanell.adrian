@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Adrián Sánchez Albanell{% endblock %}
+
+{% block content %}
+<noscript><style>[data-route]{display:block!important}</style></noscript>
+
+<section data-route="home" class="min-h-screen flex flex-col items-center justify-center gap-4">
+  <h1 class="text-3xl font-semibold text-cv-ink">Hello, world</h1>
+  <a href="#/cv" class="text-zinc-600 underline underline-offset-4 hover:text-cv-ink transition-colors">View my CV</a>
+</section>
+
+<section data-route="cv" hidden>
+  {% include "cv.html" %}
+  <a href="#/" class="cv-back-btn" aria-label="Back to home">
+    <svg class="w-5 h-5 fill-zinc-50" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M9.53 2.47a.75.75 0 0 1 0 1.06L4.81 8.25H15a6.75 6.75 0 0 1 0 13.5h-3a.75.75 0 0 1 0-1.5h3a5.25 5.25 0 1 0 0-10.5H4.81l4.72 4.72a.75.75 0 1 1-1.06 1.06l-6-6a.75.75 0 0 1 0-1.06l6-6a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></svg>
+  </a>
+</section>
+
+<script>
+  (function () {
+    var titles = { home: "Adrián Sánchez Albanell", cv: "Adrián Sánchez Albanell — CV" };
+    function render() {
+      var route = location.hash.replace(/^#\/?/, "") || "home";
+      if (!(route in titles)) {
+        location.replace("#/");
+        return;
+      }
+      document.querySelectorAll("[data-route]").forEach(function (el) {
+        el.hidden = el.dataset.route !== route;
+      });
+      document.title = titles[route];
+    }
+    window.addEventListener("hashchange", render);
+    render();
+  })();
+</script>
+{% endblock %}

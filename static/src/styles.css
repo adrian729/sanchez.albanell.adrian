@@ -193,7 +193,11 @@
   }
 
   .cv-download-btn {
-    @apply fixed bottom-6 right-6 z-50 inline-flex items-center gap-2 rounded-md bg-cv-accent px-4 py-2 text-zinc-50 text-[10pt] font-medium shadow-lg hover:shadow-xl transition-shadow print:hidden;
+    @apply fixed bottom-6 left-18 z-50 inline-flex items-center gap-2 rounded-md bg-cv-accent px-4 py-2 text-zinc-50 text-[10pt] font-medium shadow-lg hover:shadow-xl transition-shadow print:hidden;
+  }
+
+  .cv-back-btn {
+    @apply fixed bottom-6 left-6 z-50 inline-flex rounded-full bg-cv-accent p-2 shadow-lg hover:shadow-xl transition-shadow print:hidden;
   }
 
   .cv-photo {

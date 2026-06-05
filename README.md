@@ -1,13 +1,13 @@
 # CV — FastAPI + WeasyPrint
 
-A FastAPI app that renders a CV as both an HTML page and a print-ready PDF from a single Jinja template, styled with Tailwind CSS v4 and generated via WeasyPrint v67.
+A FastAPI app serving a small hash-routed portfolio SPA (HomePage + CV page) plus a print-ready PDF, all from a single Jinja CV fragment, styled with Tailwind CSS v4 and generated via WeasyPrint v67.
 
 ---
 
 ## Routes
 
-* `GET /` — HTML view of the CV
-* `GET /cv.pdf` — same template rendered to PDF (returned inline)
+* `GET /` — SPA: HomePage at `/` (or `#/`), CV at `#/cv` (client-side hash routing, works on static hosts)
+* `GET /cv.pdf` — the same CV fragment rendered to PDF (returned inline)
 * `GET /health` — health check
 
 ---
@@ -48,7 +48,8 @@ uv sync                            # Python deps
 uv run fastapi dev app/main.py
 ```
 
-* Web view: http://localhost:8000/
+* HomePage: http://localhost:8000/
+* CV view: http://localhost:8000/#/cv
 * PDF: http://localhost:8000/cv.pdf
 
 ---
@@ -56,10 +57,12 @@ uv run fastapi dev app/main.py
 ## Project structure
 
 ```
-app/main.py                  FastAPI app: GET / (HTML), GET /cv.pdf (WeasyPrint), GET /health
+app/main.py                  FastAPI app: GET / (SPA), GET /cv.pdf (WeasyPrint), GET /health
 templates/
   base.html                  HTML scaffolding, loads /static/cv.css
-  cv.html                    CV markup (hardcoded content, two-column layout)
+  cv.html                    CV content fragment (hardcoded content, two-column layout)
+  index.html                 SPA shell: home + CV sections, inline hash router (includes cv.html)
+  cv_pdf.html                PDF wrapper: base.html + cv.html, rendered only for WeasyPrint
 static/
   src/cv.css                 Tailwind entry (@import "tailwindcss" + @source + @import "./styles.css")
   src/styles.css             custom CSS (@font-face + @theme tokens + @layer components + @page / @media print)
@@ -104,7 +107,7 @@ docker build -t cv-fastapi .
 docker run --rm -p 8000:8000 cv-fastapi
 ```
 
-Hit `http://localhost:8000/`, `/cv.pdf`, and `/health`.
+Hit `http://localhost:8000/`, `/#/cv`, `/cv.pdf`, and `/health`.
 
 `.dockerignore` excludes `.venv/`, `bin/`, `future/`, the prebuilt `static/cv.css`, etc., so the CSS is always built fresh inside the image.
 

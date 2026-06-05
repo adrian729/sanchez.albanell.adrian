@@ -35,15 +35,15 @@ def _static_url_fetcher(url: str, timeout: int = 10, ssl_context=None):
 
 
 @app.get("/", response_class=HTMLResponse)
-def view_cv(request: Request):
+def view_index(request: Request):
     return templates.TemplateResponse(
-        "cv.html", {"request": request, "pdf_filename": PDF_FILENAME}
+        "index.html", {"request": request, "pdf_filename": PDF_FILENAME}
     )
 
 
 @app.get("/cv.pdf")
 def cv_pdf(request: Request):
-    html_string = templates.get_template("cv.html").render(
+    html_string = templates.get_template("cv_pdf.html").render(
         {"request": request, "pdf_filename": PDF_FILENAME}
     )
 
