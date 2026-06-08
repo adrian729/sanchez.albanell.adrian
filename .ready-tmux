@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+session="$(tmux display-message -p '#S')"
+dir="$(pwd)"
+
+## MAIN: nvim (left) + claude (right) ##
+tmux rename-window -t "$session:1" main
+tmux send-keys -t "$session:1.1" 'nvim .' C-m
+tmux split-window -h -t "$session:1.1" -c "$dir"
+tmux send-keys -t "$session:1.2" 'claude' C-m
+tmux select-pane -t "$session:1.1"
+
+## SERVERS: clean terminal (left) + css watcher (top right) + fastapi dev (bottom right) ##
+tmux new-window -t "$session" -n servers -c "$dir"
+tmux split-window -h -t "$session:servers" -c "$dir"
+tmux send-keys -t "$session:servers" './scripts/build-css.py --watch' C-m
+tmux split-window -v -t "$session:servers" -c "$dir"
+tmux send-keys -t "$session:servers" 'uv run fastapi dev app/main.py --port 8080' C-m
+tmux select-pane -t "$session:servers.1"
+
+## land on the main window, nvim pane ##
+tmux select-window -t "$session:1"
+tmux select-pane -t "$session:1.1"
